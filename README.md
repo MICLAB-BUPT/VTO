@@ -14,7 +14,9 @@ Rui Wang<sup>1</sup>, Yeteng Wu<sup>1</sup>, Xianlin Zhang<sup>2</sup>, Mengshi 
 ---
 
 ## Overview
-
+<p align="center">
+    <img src="assets/vto_framework.png" width="95%">
+  </p>
 VTO is a process-supervised reinforcement learning framework for dynamic visual-tool orchestration in video anomaly detection (VAD). Instead of treating visual tools as isolated modules, VTO iteratively reasons over a video, invokes specialized experts, incorporates their observations, and constructs a complete causal chain before producing an explainable anomaly report.
 
 - **VAD-Tool benchmark.** A hierarchical tool environment with 12 visual experts covering entity tracking, behavior and scene understanding, and high-stakes hazard detection.
