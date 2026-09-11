@@ -10,7 +10,7 @@ import cv2
 import numpy as np
 import torch
 
-ROOT = Path("/home/wyt/VIoTGPT")
+ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools"))
 from FireSmokeDetection.experimental import attempt_load
 from FireSmokeDetection.utils.general import non_max_suppression, scale_coords

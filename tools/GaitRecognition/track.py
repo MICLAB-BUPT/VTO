@@ -1,4 +1,6 @@
 import os
+
+VTO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 import os.path as osp
 import sys
 import cv2
@@ -25,8 +27,8 @@ from IPython import embed
 track_cfgs = {
     "model": {
         # "seg_model" : "./demo/checkpoints/seg_model/human_pp_humansegv2_mobile_192x192_inference_model_with_softmax/deploy.yaml",
-        "ckpt": "/home/wyt/VIoTGPT/project/Gait-recognition/checkpoints/bytetrack_model/bytetrack_x_mot17.pth.tar",  # 1
-        "exp_file": "/home/wyt/VIoTGPT/project/Gait-recognition/checkpoints/bytetrack_model/yolox_x_mix_det.py",  # 4
+        "ckpt": os.path.join(VTO_ROOT, "project/Gait-recognition/checkpoints/bytetrack_model/bytetrack_x_mot17.pth.tar"),  # 1
+        "exp_file": os.path.join(VTO_ROOT, "project/Gait-recognition/checkpoints/bytetrack_model/yolox_x_mix_det.py"),  # 4
     },
     "gait": {
         "dataset": "GREW",

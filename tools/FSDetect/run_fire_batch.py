@@ -10,7 +10,7 @@ import cv2
 import numpy as np
 import torch
 
-ROOT = Path("/home/wyt/VIoTGPT")
+ROOT = Path(__file__).resolve().parents[2]
 COMPAT = ROOT / "tools/FireSmokeDetection/yolov5_compat"
 sys.path.insert(0, str(COMPAT))
 from models.experimental import attempt_load

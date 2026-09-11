@@ -53,8 +53,8 @@ The benchmark covers both single-step tasks and interrelated multi-step tasks. T
 ```text
 VTO/
 ├── README.md
-├── VIoTGPT_Vision_nodemo1.py       # tool wrappers and agent prompts
-├── ww_test_VIoTGPT_test_analysis.py # batch inference/evaluation entry point
+├── vto_vision.py       # tool wrappers and agent prompts
+├── run_vto.py # batch inference/evaluation entry point
 ├── main_models/                     # LLM and VLM adapters
 ├── tools/                           # selected visual-tool implementations
 └── assets/                          # README figures
@@ -117,21 +117,20 @@ Some upstream tools require mutually incompatible package versions. In that case
 
 Complete the following items before running inference:
 
-1. **Fix the prompt import.** `ww_test_VIoTGPT_test_analysis.py` imports `PREFIX`, `FORMAT_INSTRUCTIONS`, and `SUFFIX` from `VIoTGPT_Vision_nodemodata`, which is not present in this snapshot. These constants are defined in `VIoTGPT_Vision_nodemo1.py`; update the import accordingly or restore the missing module.
-2. **Replace machine-specific paths.** `VIoTGPT_Vision_nodemo1.py` contains paths rooted at `/home/wyt/VIoTGPT`. Replace them with the absolute path to your clone or refactor them to derive from `script_directory`.
-3. **Align module directory names.** Several imports use the original experiment names, while this snapshot uses release names such as `FSDetect`, `CrowdCounting`, `SceneRecognition`, `PlateRecognition`, `GaitRecognition`, `VideoAnomalyDetection`, and `ViolenceDetection`. Update `sys.path` and imports, or restore the expected upstream directory layout.
-4. **Restore external components.** The entry point references components that are not present in this snapshot, including SAM2, ChildDetection, MOTIP, DSFD face detection, and Zero-DCE. Install or copy the corresponding upstream projects if those imports remain enabled.
-5. **Download model weights.** Tool wrappers expect local checkpoints for re-identification, fire/smoke detection, pose estimation, weapon detection, scene recognition, crowd counting, tracking, face detection, plate recognition, gait recognition, violence detection, and video anomaly detection. Follow the README inside each `tools/<ToolName>/` directory and update the checkpoint paths in `VIoTGPT_Vision_nodemo1.py`.
-6. **Provide an orchestration model.** `--model_path` must point to a local Hugging Face-format base model. `--lora_path` is optional and should point to the trained VTO adapter when one is available.
+1. **Project paths.** `vto_vision.py` and the bundled tool scripts now derive the repository root from their own file locations; no personal home-directory path is required.
+2. **Align module directory names.** Several imports use the original experiment names, while this snapshot uses release names such as `FSDetect`, `CrowdCounting`, `SceneRecognition`, `PlateRecognition`, `GaitRecognition`, `VideoAnomalyDetection`, and `ViolenceDetection`. Update `sys.path` and imports, or restore the expected upstream directory layout.
+3. **Restore external components.** The entry point references components that are not present in this snapshot, including SAM2, ChildDetection, MOTIP, DSFD face detection, and Zero-DCE. Install or copy the corresponding upstream projects if those imports remain enabled.
+4. **Download model weights.** Tool wrappers expect local checkpoints for re-identification, fire/smoke detection, pose estimation, weapon detection, scene recognition, crowd counting, tracking, face detection, plate recognition, gait recognition, violence detection, and video anomaly detection. Follow the README inside each `tools/<ToolName>/` directory and update the checkpoint paths in `vto_vision.py`.
+5. **Provide an orchestration model.** `--model_path` must point to a local Hugging Face-format base model. `--lora_path` is optional and should point to the trained VTO adapter when one is available.
 
 Useful checks before a full run:
 
 ```bash
-# Find paths retained from the original machine.
-grep -n "/home/wyt/VIoTGPT" VIoTGPT_Vision_nodemo1.py
+# Inspect the portable project-root helper and resolved paths.
+grep -n "PROJECT_ROOT\|project_path" vto_vision.py
 
 # Check the command-line interface without loading the models.
-python ww_test_VIoTGPT_test_analysis.py --help
+python run_vto.py --help
 ```
 
 The second command will still import every backend. If it fails with `ModuleNotFoundError`, install or configure the named backend first.
@@ -198,7 +197,7 @@ Create the output directories first, then process one sample with `--limit 1`:
 ```bash
 mkdir -p outputs evaluation
 
-python ww_test_VIoTGPT_test_analysis.py \
+python run_vto.py \
   --model_path /absolute/path/to/Qwen2.5-VL-model \
   --lora_path /absolute/path/to/VTO-LoRA-adapter \
   --load "FSDetect_cuda:0" \
@@ -248,7 +247,7 @@ Each line in `--output_path` is a JSON object with:
 ## Troubleshooting
 
 - **`ModuleNotFoundError` during `--help`:** the entry point imports every backend before parsing arguments. Configure all imports or guard/remove backends that are not being used.
-- **Checkpoint not found:** download the weight named by the exception and update the corresponding path in `VIoTGPT_Vision_nodemo1.py`.
+- **Checkpoint not found:** download the weight named by the exception and update the corresponding path in `vto_vision.py`.
 - **Input file is reported missing:** use absolute media paths, or ensure `--query_data_path` is the correct prefix for entries beginning with `./`.
 - **CUDA out of memory:** load fewer tools, distribute tools across devices in `--load`, shorten the input video, or use a smaller/quantized orchestration model.
 - **Output file cannot be created:** create the parent directory before starting the command.

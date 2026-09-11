@@ -17,7 +17,7 @@ import re
 import uuid
 from PIL import Image
 import time
-from VIoTGPT_Vision_nodemo1 import (
+from vto_vision import (
     PersonReid,
     VehicleReid,
     FSDetect,
@@ -38,7 +38,7 @@ from VIoTGPT_Vision_nodemo1 import (
     
 
 )
-from VIoTGPT_Vision_nodemodata import PREFIX, FORMAT_INSTRUCTIONS, SUFFIX
+from vto_vision import PREFIX, FORMAT_INSTRUCTIONS, SUFFIX
 
 from langchain.agents.initialize import initialize_agent
 
@@ -95,7 +95,7 @@ def write_stats_to_file(stats, file_path):
     successful_calls_overall = 0
 
     with open(file_path, "w", encoding='utf-8') as f:
-        f.write("VIoTGPT 工具调用成功率报告\n")
+        f.write("VTO 工具调用成功率报告\n")
         f.write("=" * 40 + "\n\n")
         
         header = f"{'工具名称':<30} | {'总调用次数':>12} | {'成功调用次数':>15} | {'成功率 (%)':>18}\n"
@@ -143,7 +143,7 @@ def cut_dialogue_history(history_memory, keep_last_n_words=500):
 class ConversationBot:
     def __init__(self, load_dict):
         
-        print(f"Initializing VIoTGPT_nodemo, load_dict={load_dict}")
+        print(f"Initializing VTO_nodemo, load_dict={load_dict}")
         self.models = {}
         for class_name, device in load_dict.items():
             self.models[class_name] = globals()[class_name](device=device)
@@ -256,7 +256,7 @@ class ConversationBot:
 
         # 如果需要，格式化响应以包含图像 markdown
         response = re.sub(
-            "(image/[-\w]*.png)",
+            r"(image/[-\w]*.png)",
             lambda m: f"![](file={m.group(0)})*{m.group(0)}*",
             res["output"],
         )
@@ -299,7 +299,7 @@ class ConversationBot:
 
         # 如果需要，格式化响应以包含图像 markdown
         response = re.sub(
-            "(image/[-\w]*.mp4)",
+            r"(image/[-\w]*.mp4)",
             lambda m: f"![](file={m.group(0)})*{m.group(0)}*",
             res["output"],
         )

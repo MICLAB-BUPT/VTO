@@ -10,7 +10,7 @@ import numpy as np
 import torch
 from PIL import Image
 
-ROOT = Path("/home/wyt/VIoTGPT")
+ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools"))
 import VadCLIP.src.clip as clip
 from VadCLIP.src.model import CLIPVAD

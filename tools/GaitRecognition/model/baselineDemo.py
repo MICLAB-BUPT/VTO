@@ -8,6 +8,8 @@ import torch.utils.data as tordata
 
 import sys
 import os
+
+VTO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
 # root =  os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname( os.path.abspath(__file__) )))) + "/modeling/"
 # sys.path.append(root)
 # import backbones
@@ -23,7 +25,7 @@ from dataset_gait import DataSet
 
 model_cfgs = {  
     # "gait_model": "./checkpoints/gait_model/Baseline-250000.pt"
-    "gait_model": "/home/wyt/VIoTGPT/tools/Gait-recognition/checkpoints/gait_model/GaitBase_DA-180000.pt"
+    "gait_model": os.path.join(VTO_ROOT, "tools/Gait-recognition/checkpoints/gait_model/GaitBase_DA-180000.pt")
 }
 
 class CollateFn(object):

@@ -1,4 +1,6 @@
-import os 
+import os
+
+VTO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 import os.path as osp
 import sys
 import cv2
@@ -22,7 +24,7 @@ from yolox.exp import get_exp
 
 seg_cfgs = {  
     "model":{
-        "seg_model" : "/home/wyt/VIoTGPT/project/Gait-recognition/checkpoints/seg_model/human_pp_humansegv2_mobile_192x192_inference_model_with_softmax/deploy.yaml",
+        "seg_model" : os.path.join(VTO_ROOT, "project/Gait-recognition/checkpoints/seg_model/human_pp_humansegv2_mobile_192x192_inference_model_with_softmax/deploy.yaml"),
     },
     "gait":{
         "dataset": "GREW",

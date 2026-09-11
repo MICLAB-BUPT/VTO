@@ -1,5 +1,7 @@
 import cv2
 import os
+
+VTO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 import numpy as np
 from collections import deque
 from .utils.datasets import letterbox
@@ -121,7 +123,7 @@ class PersonFallTracker:
 class FallDetectorMulti:
     def __init__(
         self,
-        model_path="/home/wyt/VIoTGPT/tools/HumanFallDetection/yolov7-w6-pose.pt",
+        model_path=os.path.join(VTO_ROOT, "tools/HumanFallDetection/yolov7-w6-pose.pt"),
         window_size=10,
         fps=30,
         v_thresh=60.0,
@@ -179,7 +181,7 @@ class FallDetectorMulti:
 
     def load_model(self, path):
         
-        sys.path.insert(0, "/home/wyt/VIoTGPT/tools/HumanFallDetection")
+        sys.path.insert(0, os.path.join(VTO_ROOT, "tools/HumanFallDetection"))
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         # pprint.pprint(sys.path)
         # import pdb; pdb.set_trace()

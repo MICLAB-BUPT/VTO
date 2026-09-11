@@ -1,12 +1,14 @@
 # This file contains experimental modules
 import os
 
+VTO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+
 import sys
 import numpy as np
 import torch
 import torch.nn as nn
 # sys.path.append("./tools/fire-smoke-detection/models")
-sys.path.append("/home/wyt/VIoTGPT/tools/fire-smoke-detection")
+sys.path.append(os.path.join(VTO_ROOT, "tools/fire-smoke-detection"))
 from .models.common import Conv, DWConv
 from .utils.google_utils import attempt_download
 

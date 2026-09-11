@@ -1,6 +1,8 @@
 from __future__ import division
 
 import os
+
+VTO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 import warnings
 from collections import OrderedDict
 from config import return_args, args
@@ -157,8 +159,8 @@ def show_map(out_pointes, frame, width, height, crop_size, num_h, num_w):
 if __name__ == '__main__':
     tuner_params = nni.get_next_parameter()
     params = {
-        'pre': '/home/wyt/VIoTGPT/tools/CLTR_crowdcounting/ckpt/video_model.pth',  # !!! IMPORTANT: CHANGE THIS to your model path
-        'video_path': '/home/wyt/VIoTGPT/0558.jpg', # The image to process
+        'pre': os.path.join(VTO_ROOT, "tools/CLTR_crowdcounting/ckpt/video_model.pth"),  # !!! IMPORTANT: CHANGE THIS to your model path
+        'video_path': os.path.join(VTO_ROOT, "0558.jpg"), # The image to process
         'num_queries': 700, # This should match the model's configuration
         'device': 'cuda',
         # Add other necessary args from your config if the model requires them

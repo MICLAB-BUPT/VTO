@@ -1,6 +1,8 @@
 from __future__ import division
 
 import os
+
+VTO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 import warnings
 from collections import OrderedDict
 from config import return_args, args  # Assuming config.py is present and correct
@@ -182,8 +184,8 @@ if __name__ == '__main__':
     # Instead of using nni, we define the parameters directly for inference.
     # You MUST update the 'pre' and 'image_path' values.
     params = {
-        'pre': '/home/wyt/VIoTGPT/tools/CLTR_crowdcounting/ckpt/video_model.pth',  # !!! IMPORTANT: CHANGE THIS to your model path
-        'image_path': '/home/wyt/VIoTGPT/0558.jpg', # The image to process
+        'pre': os.path.join(VTO_ROOT, "tools/CLTR_crowdcounting/ckpt/video_model.pth"),  # !!! IMPORTANT: CHANGE THIS to your model path
+        'image_path': os.path.join(VTO_ROOT, "0558.jpg"), # The image to process
         'num_queries': 700, # This should match the model's configuration
         'device': 'cuda',
         # Add other necessary args from your config if the model requires them

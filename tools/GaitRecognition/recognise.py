@@ -1,4 +1,6 @@
 import os
+
+VTO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 import os.path as osp
 import pickle
 import sys
@@ -9,7 +11,7 @@ sys.path.append(root)
 from opengait.utils_gait import config_loader
 sys.path.append(os.path.dirname( os.path.abspath(__file__)) + "/modeling/")
 from loguru import logger
-sys.path.append('/home/wyt/VIoTGPT/project/Gait-recognition/model')
+sys.path.append(os.path.join(VTO_ROOT, "project/Gait-recognition/model"))
 import baselineDemo
 import gait_compare as gc
 
@@ -17,7 +19,7 @@ recognise_cfgs = {
     "gaitmodel":{
         "model_type": "BaselineDemo",
         # "cfg_path": "./configs/baseline/baseline_GREW.yaml",
-        "cfg_path": "/home/wyt/VIoTGPT/project/Gait-recognition/configs/gaitbase/gaitbase_da_gait3d.yaml",
+        "cfg_path": os.path.join(VTO_ROOT, "project/Gait-recognition/configs/gaitbase/gaitbase_da_gait3d.yaml"),
     },
 }
 

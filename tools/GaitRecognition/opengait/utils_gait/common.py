@@ -1,5 +1,7 @@
 import copy
 import os
+
+VTO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "..", ".."))
 import inspect
 import logging
 import torch
@@ -138,7 +140,7 @@ def clones(module, N):
 def config_loader(path):
     with open(path, 'r') as stream:
         src_cfgs = yaml.safe_load(stream)
-    with open("/home/wyt/VIoTGPT/tools/Gait-recognition/configs/default.yaml", 'r') as stream:
+    with open(os.path.join(VTO_ROOT, "tools/Gait-recognition/configs/default.yaml"), 'r') as stream:
         dst_cfgs = yaml.safe_load(stream)
     MergeCfgsDict(src_cfgs, dst_cfgs)
     return dst_cfgs

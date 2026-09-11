@@ -7,6 +7,8 @@ from PIL import Image
 import argparse
 import os
 
+VTO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
+
 # 假设你的项目结构中有这些模块，如果没有，需要调整路径
 from model import CLIPVAD
 # from src.utils.tools import get_prompt_text # 如果你没有这个文件，我在下面手写了一个替代版
@@ -211,7 +213,7 @@ def main():
     parser.add_argument(
         "--model-path",
         type=str,
-        default="/home/wyt/VIoTGPT/VadCLIP/model/model_ucf.pth",
+        default=os.path.join(VTO_ROOT, "VadCLIP/model/model_ucf.pth"),
     )
     # 模型参数 (需与训练配置一致)
     parser.add_argument("--embed-dim", default=512, type=int)

@@ -9,6 +9,12 @@ from transformers import (
     AutoModelForZeroShotObjectDetection,
 )
 import os
+from pathlib import Path
+
+PROJECT_ROOT = Path(__file__).resolve().parent
+
+def project_path(relative_path):
+    return str(PROJECT_ROOT / relative_path)
 
 import sys
 
@@ -19,10 +25,10 @@ import shutil
 import traceback
 import numpy as np
 
-sys.path.append("/home/wyt/VIoTGPT/tools/")
+sys.path.append(project_path("tools/"))
 # 1
-sys.path.append("/home/wyt/VIoTGPT/tools/reid-test/")
-sys.path.append("/home/wyt/VIoTGPT/tools/reid-test/demo/")
+sys.path.append(project_path("tools/reid-test/"))
+sys.path.append(project_path("tools/reid-test/demo/"))
 from fastreid.config import get_cfg
 from predictor import FeatureExtractionDemo
 import torch.nn.functional as Fun
@@ -30,7 +36,6 @@ import torch.nn.functional as Fun
 # 2
 # sys.path.append("./tools/fire-smoke-detection/")
 # sys.path.append("./tools/fire-smoke-detection/models")
-from pathlib import Path
 import queue
 from FireSmokeDetection.experimental import attempt_load
 from FireSmokeDetection.utils.datasets import LoadImages
@@ -63,18 +68,18 @@ from ChildDetection import ChildDetection
 
 
 # SceneRecognition
-# sys.path.append('/home/wyt/VIoTGPT/tools/place/')
+# sys.path.append(project_path("tools/place/"))
 import pandas as pd
 from torchvision import transforms
 import place.wideresnet as wideresnet
 from tqdm import *
 
 # holmesvau
-sys.path.append("/home/wyt/VIoTGPT/tools/HolmesVAU/")
+sys.path.append(project_path("tools/HolmesVAU/"))
 from holmesvau.holmesvau_utils import load_model, generate
 
 # CrowdCounting
-sys.path.append("/home/wyt/VIoTGPT/tools/CLTR_crowdcounting/")
+sys.path.append(project_path("tools/CLTR_crowdcounting/"))
 
 from collections import OrderedDict
 import argparse
@@ -100,9 +105,9 @@ import numpy as np
 import VadCLIP.src.clip as clip
 from VadCLIP.src.model import CLIPVAD
 
-script_directory = os.path.dirname(os.path.abspath(__file__))
+script_directory = str(PROJECT_ROOT)
 
-motip_tool_path = "/home/wyt/VIoTGPT/tools/MOTIP_MultipleObjectTracking/"
+motip_tool_path = project_path("tools/MOTIP_MultipleObjectTracking/")
 sys.path.append(motip_tool_path)
 from MOTIP_MultipleObjectTracking.models.motip import build as build_TrackingModel
 from MOTIP_MultipleObjectTracking.models.misc import load_checkpoint
@@ -114,13 +119,13 @@ from MOTIP_MultipleObjectTracking.configs.util import load_super_config
 from torchvision.transforms import functional as F
 
 # GaitRecognition
-sys.path.append('/home/wyt/VIoTGPT/tools/Gait-recognition/')
+sys.path.append(project_path("tools/Gait-recognition/"))
 from track import *
 from segment import *
 from recognise import *
 
 #  Face Detection Tool ---
-sys.path.append("/home/wyt/VIoTGPT/tools/FaceDetection_DSFD/")
+sys.path.append(project_path("tools/FaceDetection_DSFD/"))
 from FaceDetection_DSFD.face_ssd import build_ssd
 from FaceDetection_DSFD.data import WIDERFace_CLASSES, widerface_640, TestBaseTransform
 # from widerface_val import bbox_vote
@@ -144,12 +149,12 @@ from HumanFallDetection.config import (
 )
 
 # Plate Recognition
-sys.path.append('/home/wyt/VIoTGPT/tools/plate_recognition/')
+sys.path.append(project_path("tools/plate_recognition/"))
 from PIL import Image, ImageDraw, ImageFont
 from rpnet.demo_plate import fh02
 
 # Gait Recognition
-sys.path.append('/home/wyt/VIoTGPT/project/Gait-recognition/')
+sys.path.append(project_path("project/Gait-recognition/"))
 from track import *
 from segment import *
 from recognise import *
@@ -376,7 +381,7 @@ class PlateRecognition:
         self.device = device
         self.numClasses = 4
         self.img_size = (480, 480)
-        self.resume_file = "/home/wyt/VIoTGPT/tools/plate_recognition/fh02.pth"
+        self.resume_file = project_path("tools/plate_recognition/fh02.pth")
         self.provinces = ["皖", "沪", "津", "渝", "冀", "晋", "蒙", "辽", "吉", "黑", "苏", "浙", "京", "闽", "赣", "鲁",
                           "豫", "鄂", "湘", "粤", "桂", "琼", "川", "贵", "云", "藏", "陕", "甘", "青", "宁", "新", "警", "学", "O"]
         self.alphabets = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W',
@@ -434,7 +439,7 @@ class PlateRecognition:
                                       (0, 0, 255), 2)
                         pilImg = Image.fromarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
                         draw = ImageDraw.Draw(pilImg)
-                        font = ImageFont.truetype("/home/wyt/VIoTGPT/tools/plate_recognition/rpnet/SimHei.ttf", 50, encoding='utf-8')
+                        font = ImageFont.truetype(project_path("tools/plate_recognition/rpnet/SimHei.ttf"), 50, encoding='utf-8')
                         draw.text((int(left_up[0]), int(left_up[1]) - 40), lpn, (255, 0, 0),
                                   font=font)
                         cv2charimg = cv2.cvtColor(np.array(pilImg), cv2.COLOR_RGB2BGR)
@@ -450,11 +455,11 @@ class VehicleReid:
     def __init__(self, device):
         print(f"Initializing Vehicle Re-Identification")
         self.cfg = get_cfg()
-        self.cfg.merge_from_file("/home/wyt/VIoTGPT/tools/reid-test/demo/Base-SBS.yml")
+        self.cfg.merge_from_file(project_path("tools/reid-test/demo/Base-SBS.yml"))
         self.cfg.merge_from_list(
             [
                 "MODEL.WEIGHTS",
-                "/home/wyt/VIoTGPT/tools/reid-test/demo/models/veri_sbs_R50-ibn.pth",
+                project_path("tools/reid-test/demo/models/veri_sbs_R50-ibn.pth"),
             ]
         )
         self.cfg.freeze()
@@ -528,11 +533,11 @@ class PersonReid:
     def __init__(self, device):
         print("Initializing Person Re-identification")
         self.cfg = get_cfg()
-        self.cfg.merge_from_file("/home/wyt/VIoTGPT/tools/reid-test/demo/Base-SBS.yml")
+        self.cfg.merge_from_file(project_path("tools/reid-test/demo/Base-SBS.yml"))
         self.cfg.merge_from_list(
             [
                 "MODEL.WEIGHTS",
-                "/home/wyt/VIoTGPT/tools/reid-test/demo/models/market_sbs_R50-ibn.pth",
+                project_path("tools/reid-test/demo/models/market_sbs_R50-ibn.pth"),
             ]
         )
         self.cfg.freeze()
@@ -614,7 +619,7 @@ class ObjectLOCTool:  # <-- Inherit from nothing specific
     def __init__(self, device):
         print(f"Initializing Object Localization")
         self.device = device
-        self.model_path = "/home/wyt/VIoTGPT/tools/owlvit"  # Or hardcode directly below
+        self.model_path = project_path("tools/owlvit")  # Or hardcode directly below
 
         try:
             self.processor = OwlViTProcessor.from_pretrained(self.model_path)
@@ -695,7 +700,7 @@ class FSDetect:
     def __init__(self, device):
         print(f"Initializing Fire and Smoke Detection")
         # 建议：尽量不要硬编码绝对路径，用 self.base_path 方便管理
-        self.base_path = "/home/wyt/VIoTGPT/tools/FireSmokeDetection"
+        self.base_path = project_path("tools/FireSmokeDetection")
         self.out = os.path.join(self.base_path, "result/")
         self.weights = os.path.join(self.base_path, "best.pt")
 
@@ -990,7 +995,7 @@ class ImageSegmenter:
 
         sam2_model = build_sam2(
             "configs/sam2/sam2_hiera_l.yaml",
-            "/home/wyt/VIoTGPT/sam2/checkpoints/sam2_hiera_large.pt",
+            project_path("sam2/checkpoints/sam2_hiera_large.pt"),
         ).to(device)
         sam2_model.eval()
 
@@ -1085,8 +1090,8 @@ class HumanPoseEstimation:
         """
         print(f"Initializing Human Pose Estimation (MMPose)")
         self.filter_args = dict(bbox_thr=0.3, nms_thr=0.3, pose_based_nms=False)
-        self.pose2d_weights = "/home/wyt/VIoTGPT/tools/mmpose/rtmo-l_16xb16-600e_body7-640x640-b37118ce_20231211.pth"
-        self.pose2d_config = "/home/wyt/VIoTGPT/tools/mmpose/configs/body_2d_keypoint/rtmo/body7/rtmo-l_16xb16-600e_body7-640x640.py"
+        self.pose2d_weights = project_path("tools/mmpose/rtmo-l_16xb16-600e_body7-640x640-b37118ce_20231211.pth")
+        self.pose2d_config = project_path("tools/mmpose/configs/body_2d_keypoint/rtmo/body7/rtmo-l_16xb16-600e_body7-640x640.py")
         for model in POSE2D_SPECIFIC_ARGS:
             if self.pose2d_config is not None and model in self.pose2d_config:
                 self.filter_args.update(POSE2D_SPECIFIC_ARGS[model])
@@ -1264,7 +1269,7 @@ class GroundingDINOWeaponDetector:
         """
         print(f"Initializing Object Detector (Grounding DINO)")
 
-        model_id = "/home/wyt/VIoTGPT/tools/grounding_dino"
+        model_id = project_path("tools/grounding_dino")
         self.device = device
         self.box_threshold = 0.35  # 设置检测阈值
 
@@ -1404,7 +1409,7 @@ class SceneRecognition:
         self.weight_softmax[self.weight_softmax < 0] = 0
         self.ratio = 0.1
         self.trasform = pd.read_csv(
-            "/home/wyt/VIoTGPT/tools/place/transform.txt", header=None, index_col=0
+            project_path("tools/place/transform.txt"), header=None, index_col=0
         ).to_dict()[1]
 
     def __recursion_change_bn(self, module):
@@ -1416,14 +1421,14 @@ class SceneRecognition:
         return module
 
     def __load_labels(self):
-        file_name_category = "/home/wyt/VIoTGPT/tools/place/categories_places365.txt"
+        file_name_category = project_path("tools/place/categories_places365.txt")
         classes = list()
         with open(file_name_category) as class_file:
             for line in class_file:
                 classes.append(line.strip().split(" ")[0][3:])
         classes = tuple(classes)
         # indoor and outdoor relevant
-        file_name_IO = "/home/wyt/VIoTGPT/tools/place/IO_places365.txt"
+        file_name_IO = project_path("tools/place/IO_places365.txt")
         with open(file_name_IO) as f:
             lines = f.readlines()
             labels_IO = []
@@ -1432,11 +1437,11 @@ class SceneRecognition:
                 labels_IO.append(int(items[-1]) - 1)
         labels_IO = np.array(labels_IO)
         # scene attribute relevant
-        file_name_attribute = "/home/wyt/VIoTGPT/tools/place/labels_sunattribute.txt"
+        file_name_attribute = project_path("tools/place/labels_sunattribute.txt")
         with open(file_name_attribute) as f:
             lines = f.readlines()
             labels_attribute = [item.rstrip() for item in lines]
-        file_name_W = "/home/wyt/VIoTGPT/tools/place/W_sceneattribute_wideresnet18.npy"
+        file_name_W = project_path("tools/place/W_sceneattribute_wideresnet18.npy")
         W_attribute = np.load(file_name_W)
         return classes, labels_IO, labels_attribute, W_attribute
 
@@ -1452,7 +1457,7 @@ class SceneRecognition:
 
     def __load_model(self):
         # this model has a last conv feature map as 14x14
-        model_file = "/home/wyt/VIoTGPT/tools/place/wideresnet18_places365.pth.tar"
+        model_file = project_path("tools/place/wideresnet18_places365.pth.tar")
         model = wideresnet.resnet18(num_classes=365)
         checkpoint = torch.load(model_file, map_location=lambda storage, loc: storage)
         state_dict = {
@@ -1544,9 +1549,9 @@ class VideoAnomalyDetection:
 #     def __init__(self, device):
 #         print(f"Initializing Video Anomaly Detection")
 #         # 将模型加载和设置部分移到构造函数中，这样模型只会被加载一次
-#         mllm_path = "/home/wyt/VIoTGPT/tools/HolmesVAU/ckpt"
+#         mllm_path = project_path("tools/HolmesVAU/ckpt")
 #         sampler_path = (
-#             "/home/wyt/VIoTGPT/tools/HolmesVAU/holmesvau/ATS/anomaly_scorer.pth"
+#             project_path("tools/HolmesVAU/holmesvau/ATS/anomaly_scorer.pth")
 #         )
 #         self.device = device
 
@@ -1709,14 +1714,14 @@ class CrowdCounting:
         )
 
         self.args = {
-            "pre": "/home/wyt/VIoTGPT/tools/CLTR_crowdcounting/ckpt/video_model.pth",
+            "pre": project_path("tools/CLTR_crowdcounting/ckpt/video_model.pth"),
             "num_queries": 700,
             "seed": 42,
         }
 
         setup_seed(self.args["seed"])
         params = {
-            "pre": "/home/wyt/VIoTGPT/tools/CLTR_crowdcounting/ckpt/video_model.pth",  # 模型权重路径
+            "pre": project_path("tools/CLTR_crowdcounting/ckpt/video_model.pth"),  # 模型权重路径
             "num_queries": 700,  # 这应与模型的配置相匹配
         }
 
@@ -1934,8 +1939,8 @@ class HumanPoseTracking:
         self.device = device
         self.dtype = torch.float16
 
-        config_path = "/home/wyt/VIoTGPT/tools/MOTIP_MultipleObjectTracking/configs/r50_deformable_detr_motip_sportsmot.yaml"
-        checkpoint_path = "/home/wyt/VIoTGPT/tools/MOTIP_MultipleObjectTracking/outputs/r50_deformable_detr_motip_sportsmot/r50_deformable_detr_motip_sportsmot.pth"
+        config_path = project_path("tools/MOTIP_MultipleObjectTracking/configs/r50_deformable_detr_motip_sportsmot.yaml")
+        checkpoint_path = project_path("tools/MOTIP_MultipleObjectTracking/outputs/r50_deformable_detr_motip_sportsmot/r50_deformable_detr_motip_sportsmot.pth")
 
         if not os.path.exists(config_path) or not os.path.exists(checkpoint_path):
             raise FileNotFoundError(
@@ -2072,7 +2077,7 @@ class FaceRecognition:
     def __init__(self, device):
         print(f"Initializing FaceRecognition")
         self.detector = cv2.FaceDetectorYN.create(
-            '/home/wyt/VIoTGPT/tools/Face_Recognition/face_detection_yunet_2023mar.onnx',  # YuNet
+            project_path("tools/Face_Recognition/face_detection_yunet_2023mar.onnx"),  # YuNet
             "",
             (320, 320),
             0.9,  # Filtering out faces of score < score_threshold
@@ -2080,7 +2085,7 @@ class FaceRecognition:
             5000  # Keep top_k bounding boxes before NMS
         )
         self.recognizer = cv2.FaceRecognizerSF.create(
-            '/home/wyt/VIoTGPT/tools/Face_Recognition/face_recognition_sface_2021dec.onnx', "")
+            project_path("tools/Face_Recognition/face_recognition_sface_2021dec.onnx"), "")
         self.cosine_similarity_threshold = 0.363
         self.l2_similarity_threshold = 1.128
 
@@ -2155,9 +2160,9 @@ class FaceDetection:
     def __init__(self, device):
         print(f"Initializing Face Detection (DSFD)")
         self.model_path = (
-            "/home/wyt/VIoTGPT/tools/FaceDetection_DSFD/WIDERFace_DSFD_RES152.pth"
+            project_path("tools/FaceDetection_DSFD/WIDERFace_DSFD_RES152.pth")
         )
-        self.save_folder = "/home/wyt/VIoTGPT/images/"
+        self.save_folder = project_path("images/")
         self.visual_threshold = 0.5
         self.device = device
         self.cuda = self.device != "cpu"
@@ -2335,7 +2340,7 @@ class LowLightEnhancer:
         self.DCE_net = LowLightEnhancer_model.enhance_net_nopool().to(self.device)
         self.DCE_net.load_state_dict(
             torch.load(
-                "/home/wyt/VIoTGPT/tools/ZeroDCE_LowLightEnhancement/ZeroDCE_code/snapshots/Epoch99.pth",
+                project_path("tools/ZeroDCE_LowLightEnhancement/ZeroDCE_code/snapshots/Epoch99.pth"),
                 map_location=self.device,
             )
         )
@@ -2383,7 +2388,7 @@ class LowLightEnhancer:
 #     def __init__(self, device):
 #         print(f"Initializing Image Super-Resolution Tool")
 
-#         model_path = "/home/wyt/VIoTGPT/tools/Real_ESRGAN/realesrnet_c64b23g32_12x4_lr2e-4_1000k_df2k_ost_20210816-4ae3b5a4.pth"
+#         model_path = project_path("tools/Real_ESRGAN/realesrnet_c64b23g32_12x4_lr2e-4_1000k_df2k_ost_20210816-4ae3b5a4.pth")
 
 #         if not os.path.exists(model_path):
 #             raise FileNotFoundError(f"Model checkpoint not found at: {model_path}")
@@ -2509,7 +2514,7 @@ class ViolenceDetection:
     def __init__(self, device):
         print("Initializing VadCLIP Violence Detection")
         self.device = device
-        self.model_path = "/home/wyt/VIoTGPT/tools/VadCLIP/models/model_ucf.pth"
+        self.model_path = project_path("tools/VadCLIP/models/model_ucf.pth")
         self.embed_dim = 512
         self.visual_length = 256
         self.visual_width = 512
