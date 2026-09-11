@@ -7,6 +7,10 @@
 <sup>†</sup> Rui Wang and Yeteng Wu contributed equally to this work.<br>
 <sup>*</sup> Corresponding author: Mengshi Qi.
 
+
+<p align="center">
+    <img src="assets/related_work.png" width="95%">
+  </p>
 ---
 
 ## News
