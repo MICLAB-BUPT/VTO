@@ -1,9 +1,11 @@
 # VTO: Visual Tool Orchestration for Video Anomaly Detection
 
-Rui Wang<sup>1</sup>, Yeteng Wu<sup>1</sup>, Xianlin Zhang<sup>2</sup>, Mengshi Qi<sup>1*</sup>
+[Rui Wang](https://orcid.org/0000-0001-5919-0847)<sup>1,†</sup>, [Yeteng Wu](https://orcid.org/0009-0000-3680-6178)<sup>1,†</sup>, [Xianlin Zhang](https://orcid.org/0000-0003-3905-2062)<sup>2</sup>, [Mengshi Qi](https://orcid.org/0000-0002-6955-6635)<sup>1,*</sup>
 
-<sup>1</sup> State Key Laboratory of Networking and Switching Technology, Beijing University of Posts and Telecommunications, China  
-<sup>2</sup> School of Digital Media & Design Arts, Beijing University of Posts and Telecommunications, China
+<sup>1</sup> State Key Laboratory of Networking and Switching Technology, Beijing University of Posts and Telecommunications, China<br>
+<sup>2</sup> School of Digital Media & Design Arts, Beijing University of Posts and Telecommunications, China<br>
+<sup>†</sup> Rui Wang and Yeteng Wu contributed equally to this work.<br>
+<sup>*</sup> Corresponding author: Mengshi Qi.
 
 ---
 
