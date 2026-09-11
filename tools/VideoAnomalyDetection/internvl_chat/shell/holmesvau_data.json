@@ -1,0 +1,9 @@
+{
+    "HIVAU_72k": {
+      "root": "/home/dancer/MLLM/HolmesVAU_full/HolmesVAU/HIVAU-70k/videos",
+      "annotation": "/home/dancer/MLLM/HolmesVAU_full/HolmesVAU/HIVAU-70k/instruction/merge_instruction_train_final.jsonl",
+      "data_augment": false,
+      "repeat_time": 1,
+      "length": 97157
+    }
+}
