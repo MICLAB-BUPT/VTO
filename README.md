@@ -1,21 +1,36 @@
-# VTO: Visual Tool Orchestration for Video Anomaly Detection
-
-[Rui Wang](https://orcid.org/0000-0001-5919-0847)<sup>1,†</sup>, [Yeteng Wu](https://orcid.org/0009-0000-3680-6178)<sup>1,†</sup>, [Xianlin Zhang](https://orcid.org/0000-0003-3905-2062)<sup>2</sup>, [Mengshi Qi](https://orcid.org/0000-0002-6955-6635)<sup>1,*</sup>
-
-<sup>1</sup> State Key Laboratory of Networking and Switching Technology, Beijing University of Posts and Telecommunications, China<br>
-<sup>2</sup> School of Digital Media & Design Arts, Beijing University of Posts and Telecommunications, China<br>
-<sup>†</sup> Rui Wang and Yeteng Wu contributed equally to this work.<br>
-<sup>*</sup> Corresponding author: Mengshi Qi.
-
+<h1 align="center">VTO: Visual Tool Orchestration for<br>Video Anomaly Detection</h1>
 
 <p align="center">
-    <img src="assets/related_work.png" width="95%">
-  </p>
----
+  <img src="assets/related_work.png" width="760" alt="Comparison of training-dependent VAD, training-free LLM/VLM approaches, and the proposed VTO framework.">
+</p>
+
+<p align="center">
+  <a href="https://doi.org/10.1145/3767308.3836202"><img src="https://img.shields.io/badge/Paper-DOI-b31b1b" alt="Paper DOI"></a>
+  <a href="#news"><img src="https://img.shields.io/badge/ACM%20MM%202026-Accepted-007ec6" alt="Accepted to ACM Multimedia 2026"></a>
+  <a href="https://github.com/MICLAB-BUPT/VTO"><img src="https://img.shields.io/badge/Code-GitHub-181717?logo=github" alt="Code on GitHub"></a>
+</p>
+
+<p align="center">
+  <a href="https://orcid.org/0000-0001-5919-0847">Rui Wang</a><sup>1,*</sup>,
+  <a href="https://orcid.org/0009-0000-3680-6178">Yeteng Wu</a><sup>1,*</sup>,
+  <a href="https://orcid.org/0000-0003-3905-2062">Xianlin Zhang</a><sup>2</sup>,
+  <a href="https://orcid.org/0000-0002-6955-6635">Mengshi Qi</a><sup>1,†</sup>
+</p>
+
+<p align="center">
+  Beijing University of Posts and Telecommunications, China<br>
+  <sup>1</sup> State Key Laboratory of Networking and Switching Technology<br>
+  <sup>2</sup> School of Digital Media &amp; Design Art<br>
+  <sup>*</sup> Equal contribution. &nbsp; <sup>†</sup> Corresponding author: <a href="mailto:qms@bupt.edu.cn">Mengshi Qi</a>.
+</p>
+
+<p align="justify">
+  <em>Video anomaly detection (VAD) is a critical yet challenging task due to the complex and diverse nature of real-world scenarios. Traditional deep learning approaches are fundamentally limited by poor generalization across diverse scenarios. While multimodal agents offer a promising tool-learning paradigm for VAD, current systems relying on supervised fine-tuning struggle with complex orchestration, and standard reinforcement learning often causes premature termination due to coarse-grained outcome rewards. To address these challenges, we propose VTO, a process-supervised reinforcement learning framework. Moving beyond static tool usage, VTO enables the agent to dynamically explore and interact with the environment. Specifically, we introduce a foundation model-driven cognitive evaluator to provide context-aware semantic feedback, which is seamlessly integrated into a Process-Supervised Cognitive Alignment that delivers fine-grained, step-wise supervision. By explicitly penalizing logical truncation and rewarding complete causal chains, the agent optimizes its multi-step reasoning policy for interrelated tool orchestration. To support our framework, we meticulously crafted VAD-Tool, a hierarchical visual tool set comprising 12 specialized vision tools spanning from entity tracking to high-stakes hazard detection, and established the corresponding benchmark for rigorous multi-step reasoning evaluation. Extensive experiments on VAD-Tool demonstrate that VTO significantly outperforms baselines, achieving up to a 10.2% absolute accuracy improvement in tool scheduling.</em>
+</p>
 
 ## News
 
-- Our paper is accepted to ACM Multimedia 2026 (MM '26).
+- 🏆 Our paper "**VTO: Visual Tool Orchestration for Video Anomaly Detection**" has been accepted to **ACM Multimedia 2026 (MM '26)**!
 
 ---
 
